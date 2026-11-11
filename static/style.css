@@ -1,0 +1,127 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #d4fcdf, #e8f5e9);
+    margin: 0;
+    padding: 30px;
+    text-align: center;
+    color: #333;
+}
+
+/* Headings */
+h1 {
+    color: #087443;
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+h2 {
+    color: #176b45;
+    margin-bottom: 25px;
+}
+
+/* Forms */
+form {
+    background: white;
+    width: 100%;
+    max-width: 450px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+    text-align: left;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #245c40;
+}
+
+/* Input boxes */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #aaa;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #07834c;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 20px;
+    background: #07834c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #045e35;
+}
+
+/* Links */
+a {
+    color: #07834c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Dashboard */
+.card {
+    background: white;
+    max-width: 450px;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Prediction result */
+.result {
+    background: white;
+    max-width: 450px;
+    margin: 25px auto;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.result h2 {
+    color: #07834c;
+}
+
+/* Mobile design */
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    form {
+        padding: 20px;
+    }
+}

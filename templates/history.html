@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction History</title>
+</head>
+<body>
+
+    <h1>Energy Prediction History</h1>
+
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>ID</th>
+            <th>Temperature</th>
+            <th>Occupants</th>
+            <th>Appliances</th>
+            <th>Hour</th>
+            <th>Weekend</th>
+            <th>Predicted Energy (kWh)</th>
+            <th>Date</th>
+        </tr>
+
+        {% for row in history %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[7] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="/dashboard">Back to Dashboard</a>
+
+</body>
+</html>

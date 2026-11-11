@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Energy Prediction</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>Smart Energy Consumption Prediction</h1>
+    <h2>Predict Your Energy Consumption</h2>
+
+    <form action="/prediction" method="POST">
+
+        Temperature:
+        <input type="number" step="any" name="temperature" required>
+        <br><br>
+
+        Number of Occupants:
+        <input type="number" name="occupants" required>
+        <br><br>
+
+        Number of Appliances:
+        <input type="number" name="appliances" required>
+        <br><br>
+
+        Hour (0-23):
+        <input type="number" name="hour" min="0" max="23" required>
+        <br><br>
+
+        Weekend (1 = Yes, 0 = No):
+        <input type="number" name="weekend" min="0" max="1" required>
+        <br><br>
+
+        <button type="submit">Predict Energy</button>
+
+    </form>
+
+    {% if result is not none %}
+        <h2>Predicted Energy: {{ result }} kWh</h2>
+    {% endif %}
+
+    <a href="/dashboard">Back to Dashboard</a>
+
+</body>
+</html>
