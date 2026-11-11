@@ -1,31 +1,43 @@
-
 from flask import Flask, render_template, request, redirect, session
 import mysql.connector
 import joblib
+import os
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
+
+# Flask application
 app = Flask(__name__)
-app.secret_key = "smart_energy_key"
 
+app.secret_key = os.getenv("SECRET_KEY")
+
+# Load trained ML model
 model = joblib.load("energy_model.pkl")
 
 
+# MySQL database connection
 def get_db():
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Pravallika@2580",
-        database="smart_energy"
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
     )
 
 
+# Home page
 @app.route("/")
 def home():
     return render_template("login.html")
 
 
+# User registration
 @app.route("/register", methods=["GET", "POST"])
 def register():
+
     if request.method == "POST":
+
         name = request.form["name"]
         email = request.form["email"]
         password = request.form["password"]
@@ -39,6 +51,7 @@ def register():
         )
 
         db.commit()
+
         cursor.close()
         db.close()
 
@@ -47,8 +60,10 @@ def register():
     return render_template("register.html")
 
 
+# User login
 @app.route("/login", methods=["POST"])
 def login():
+
     email = request.form["email"]
     password = request.form["password"]
 
@@ -68,44 +83,73 @@ def login():
     if user:
         session["user"] = user[1]
         return redirect("/dashboard")
+
     else:
         return "Invalid Email or Password"
 
 
+# Dashboard page
 @app.route("/dashboard")
 def dashboard():
+
     if "user" not in session:
         return redirect("/")
 
-    return render_template("dashboard.html", name=session["user"])
+    return render_template(
+        "dashboard.html",
+        name=session["user"]
+    )
 
 
+# Energy prediction
 @app.route("/prediction", methods=["GET", "POST"])
 def prediction():
+
     if "user" not in session:
         return redirect("/")
 
     result = None
 
     if request.method == "POST":
+
         temperature = float(request.form["temperature"])
         occupants = int(request.form["occupants"])
         appliances = int(request.form["appliances"])
         hour = int(request.form["hour"])
         weekend = int(request.form["weekend"])
 
-        result = model.predict([[
-            temperature, occupants, appliances, hour, weekend
-        ]])[0]
+        prediction_input = [[
+            temperature,
+            occupants,
+            appliances,
+            hour,
+            weekend
+        ]]
 
-    return render_template("prediction.html", result=result)
+        result = model.predict(prediction_input)[0]
+
+    return render_template(
+        "prediction.html",
+        result=result
+    )
 
 
+# Logout
 @app.route("/logout")
 def logout():
+
     session.clear()
+
     return redirect("/")
 
 
+# Run application
 if __name__ == "__main__":
-    app.run(debug=True)
+
+    port = int(os.environ.get("PORT", 5000))
+
+    app.run(
+        host="0.0.0.0",
+        port=port,
+        debug=False
+    )
